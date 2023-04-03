@@ -1,12 +1,12 @@
 package utils;
 
 import dbConnection.DBConnection;
+import model.UserTasks;
 import taskEnums.Status;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class TaskUtils {
@@ -14,30 +14,30 @@ public class TaskUtils {
     private static ResultSet resultSet;
     private static Scanner scanner = new Scanner(System.in);
     private static Status status;
+
     public static void printTasks(Integer userId) throws SQLException {
         String sql = "SELECT * FROM user_tasks WHERE user_id = ?";
 
         preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
-        preparedStatement.setInt(1,userId);
+        preparedStatement.setInt(1, userId);
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             String task = resultSet.getString("task");
             String status = resultSet.getString("status");
             String dueDate = resultSet.getString("due_date");
-
             System.out.println(status + ": " + task + ", due date: " + dueDate);
         }
     }
 
-    public static void addTask(Integer userId, String taskToAdd,String dueDate) throws SQLException {
+    public static void addTask(UserTasks userTasks) throws SQLException {
         String sql = "INSERT INTO user_tasks (user_id, task, status, due_date) VALUES (?, ?, ?, ?)";
 
         preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
-        preparedStatement.setInt(1,userId);
-        preparedStatement.setString(2,taskToAdd);
-        preparedStatement.setString(3,status.OPEN.toString());
-        preparedStatement.setString(4,dueDate);
+        preparedStatement.setInt(1, userTasks.getUserId());
+        preparedStatement.setString(2, userTasks.getTask());
+        preparedStatement.setString(3, status.OPEN.toString());
+        preparedStatement.setString(4, userTasks.getDueDate());
 
         int rowsInserted = preparedStatement.executeUpdate();
         if (rowsInserted > 0) {
@@ -49,8 +49,8 @@ public class TaskUtils {
         String sql = "UPDATE user_tasks SET status = ? WHERE task = ?";
 
         preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
-        preparedStatement.setString(1,status.CLOSE.toString());
-        preparedStatement.setString(2,task);
+        preparedStatement.setString(1, status.CLOSE.toString());
+        preparedStatement.setString(2, task);
 
         int rowsUpdated = preparedStatement.executeUpdate();
         if (rowsUpdated > 0) {
@@ -62,8 +62,8 @@ public class TaskUtils {
         String sql = "UPDATE user_tasks SET due_date = ? WHERE task = ?";
 
         preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
-        preparedStatement.setString(1,updatedDueDate);
-        preparedStatement.setString(2,task);
+        preparedStatement.setString(1, updatedDueDate);
+        preparedStatement.setString(2, task);
 
         int rowsUpdated = preparedStatement.executeUpdate();
         if (rowsUpdated > 0) {

@@ -1,11 +1,12 @@
 package model;
 
-public class userTasks {
+public class UserTasks {
     private Integer taskId;
     private Integer userId;
     private String task;
     private String status;
     private String dueDate;
+
 
     public Integer getTaskId() {
         return taskId;

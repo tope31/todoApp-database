@@ -2,27 +2,27 @@ package utils;
 
 import dbConnection.DBConnection;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DatabaseAccessCheck {
-//    static String username = "kun";
     private static PreparedStatement preparedStatement;
-    private static Statement statement;
     private static ResultSet resultSet;
+
     public static Boolean usernameDBCheck(String username) throws SQLException {
-      String sql = "SELECT username FROM users WHERE username = ?";
-      Boolean IsUsernameValid = false;
+        String sql = "SELECT username FROM users WHERE username = ?";
+        Boolean IsUsernameValid = false;
 
-      preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
-      preparedStatement.setString(1,username);
-//      preparedStatement.executeUpdate(sql);
-      resultSet = preparedStatement.executeQuery();
+        preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        resultSet = preparedStatement.executeQuery();
 
-      while (resultSet.next()) {
-           resultSet.getString(1);
-           IsUsernameValid = true;
-      }
-      return IsUsernameValid;
+        while (resultSet.next()) {
+            resultSet.getString(1);
+            IsUsernameValid = true;
+        }
+        return IsUsernameValid;
     }
 
     public static Integer retrieveUserId(String username) throws SQLException {
@@ -30,7 +30,7 @@ public class DatabaseAccessCheck {
         Integer userId = 0;
 
         preparedStatement = DBConnection.getDBConnection().prepareStatement(sql);
-        preparedStatement.setString(1,username);
+        preparedStatement.setString(1, username);
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
