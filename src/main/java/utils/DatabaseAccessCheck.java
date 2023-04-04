@@ -1,16 +1,18 @@
 package utils;
 
 import dbConnection.DBConnection;
+import interfaces.DBAccessInterface;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DatabaseAccessCheck {
+public class DatabaseAccessCheck implements DBAccessInterface {
     private static PreparedStatement preparedStatement;
     private static ResultSet resultSet;
 
-    public static Boolean usernameDBCheck(String username) throws SQLException {
+    @Override
+    public Boolean usernameDBCheck(String username) throws SQLException {
         String sql = "SELECT username FROM users WHERE username = ?";
         Boolean IsUsernameValid = false;
 
@@ -25,7 +27,8 @@ public class DatabaseAccessCheck {
         return IsUsernameValid;
     }
 
-    public static Integer retrieveUserId(String username) throws SQLException {
+    @Override
+    public Integer retrieveUserId(String username) throws SQLException {
         String sql = "SELECT user_id FROM users WHERE username = ?";
         Integer userId = 0;
 

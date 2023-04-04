@@ -1,5 +1,7 @@
 package utils;
 
+import model.Users;
+
 import java.sql.SQLException;
 
 public class Program {
@@ -7,10 +9,11 @@ public class Program {
         Users users = new Users();
         users.setUsername("lem");
         String username = users.getUsername();
-        Boolean usernameExists = DatabaseAccessCheck.usernameDBCheck(username);
+        DatabaseAccessCheck databaseAccessCheck = new DatabaseAccessCheck();
+        Boolean usernameExists = databaseAccessCheck.usernameDBCheck(username);
 
         if (usernameExists) {
-            Integer retrieveUserId = DatabaseAccessCheck.retrieveUserId(username);
+            Integer retrieveUserId = databaseAccessCheck.retrieveUserId(username);
             users.setUserId(retrieveUserId);
             ShowUserMenu.mainMenu(users);
         } else {

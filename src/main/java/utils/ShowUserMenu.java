@@ -8,19 +8,12 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ShowUserMenu {
-
-
     public static void mainMenu(Users users) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         UserTasks userTasks = new UserTasks();
 
         int choice = 0;
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mma");
-//        LocalTime localTime = LocalTime.now();
-//        if (localTime.isBefore(localTime.minusHours(9))) {
-//            System.out.println("Good afternoon");
-//        } else if (localTime.isAfter(localTime.))
-//        System.out.println(dtf.format(localTime));
+
         System.out.println("Hi " + users.getUsername());
         System.out.println("Manage your Tasks");
 
@@ -37,18 +30,21 @@ public class ShowUserMenu {
                     break;
                 case 2:
                     userTasks.setUserId(users.getUserId());
-                    userTasks.setTask("Code Java");
+                    userTasks.setTask("ginhawa");
                     userTasks.setStatus(Status.OPEN.toString());
-                    userTasks.setDueDate("2024-05-03");
+                    userTasks.setDueDate("2024-04-10");
                     TaskUtils.addTask(userTasks);
                     System.out.println();
                     break;
                 case 3:
-                    TaskUtils.markTaskAsDone("play jenshin");
+                    userTasks.setTask("read effective java");
+                    TaskUtils.markTaskAsDone(userTasks);
                     System.out.println();
                     break;
                 case 4:
-                    TaskUtils.changeDueDate("play jenshin", "2024-05-01");
+                    userTasks.setTask("read effective java");
+                    userTasks.setDueDate("2024-05-01");
+                    TaskUtils.changeDueDate(userTasks);
                     break;
                 case 5:
                     System.out.println("System exit");

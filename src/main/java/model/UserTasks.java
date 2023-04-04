@@ -7,7 +7,6 @@ public class UserTasks {
     private String status;
     private String dueDate;
 
-
     public Integer getTaskId() {
         return taskId;
     }
