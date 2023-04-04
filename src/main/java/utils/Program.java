@@ -1,7 +1,5 @@
 package utils;
 
-import model.Users;
-
 import java.sql.SQLException;
 
 public class Program {
